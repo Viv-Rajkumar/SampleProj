@@ -1,0 +1,15 @@
+{
+  "name": "MochaCalc",
+  "version": "0.0.0",
+  "description": "sample app for testing mocha test and coverage",
+  "main": "server.js",
+  "scripts": {
+    "test": "node_modules\\.bin\\istanbul.cmd cover .\\node_modules\\mocha\\bin\\_mocha -- -R spec"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "istanbul": "^0.3.0",
+    "mocha": "^1.21.4"
+  }
+}
