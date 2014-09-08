@@ -26,10 +26,7 @@ module.exports = function(grunt){
   }
 
   function consolidateCoverageResults(err, stdout, stderr, callback){
-    if(err){
-      callback();
-      return;
-    }
+   
     var watch = false;
     var keys = ["statement","branches", "functions", "lines"];      
     var coverageResult = {};
@@ -39,7 +36,7 @@ module.exports = function(grunt){
     var getTestResults = function(){
       fs.readFile('frontend/test_results/results.json', {encoding : 'utf-8'}, function (err, data) {
         if (err) throw err;        
-        console.log(JSON.parse(data.split('=')[0]).stats);
+        console.log(JSON.parse(data.split('=')[0]).stats);        
         callback()      
       });
     };
@@ -66,12 +63,10 @@ module.exports = function(grunt){
           }
         },
         "test-cov" :{
-          command: [                      
-              path.join("node_modules",".bin","istanbul.cmd") +" cover " + path.join("node_modules", "mocha", "bin", "_mocha") + " --dir " + path.join("frontend", "test_results", "coverage") + " -- -R json-cov >> " +path.join("frontend", "test_results", "results.json")
-              ],
+          command: path.join("node_modules",".bin","istanbul") +" cover " + path.join("node_modules", "mocha", "bin", "_mocha") + " --dir " + path.join("frontend", "test_results", "coverage") + " -- -R json-cov > " +path.join("frontend", "test_results", "results.json"),
               options: {
-              stdout: true,
-              callback : consolidateCoverageResults
+              stdout: true
+              //callback : consolidateCoverageResults
           }
         },
         ctest :{
