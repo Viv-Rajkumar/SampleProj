@@ -78,6 +78,13 @@ module.exports = function(grunt){
       },
       clean: {
         test: ["frontend/test_results/results.json"]
+      },
+      mkdir : {
+         test : {
+          options: {          
+            create: ['frontend/test_results']
+          }
+         }
       }
   });
 
@@ -85,9 +92,10 @@ module.exports = function(grunt){
 //
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-mkdir');
 
   grunt.registerTask('test', ['shell:test']);//Test
-  grunt.registerTask('istanbul', ["clean:test", 'shell:test-cov']);//Test Coverage results
+  grunt.registerTask('istanbul', ["clean:test", "mkdir:test", 'shell:test-cov']);//Test Coverage results
   grunt.registerTask('ctest', ['shell:ctest']);//Pushes Test results to CDASH  
 
 };
