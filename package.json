@@ -4,7 +4,7 @@
   "description": "sample app for testing mocha test and coverage",
   "main": "server.js",
   "scripts": {
-    "test": "node_modules\\.bin\\istanbul.cmd cover .\\node_modules\\mocha\\bin\\_mocha -- -R spec"
+    "test": "grunt test"
   },
   "author": "",
   "license": "ISC",

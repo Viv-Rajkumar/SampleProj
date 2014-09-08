@@ -66,10 +66,10 @@ module.exports = function(grunt){
           }
         },
         "test-cov" :{
-          command: [                
-             // "mocha -R mocha-unfunk-reporter",
-              path.join("node_modules",".bin","istanbul.cmd") +" cover " + path.join("node_modules", "mocha", "bin", "_mocha") + " --dir " + path.join("frontend", "test_results", "coverage") + " -- -R json-cov >> " +path.join("frontend", "test_results", "results.json"),
-          options: {
+          command: [                      
+              path.join("node_modules",".bin","istanbul.cmd") +" cover " + path.join("node_modules", "mocha", "bin", "_mocha") + " --dir " + path.join("frontend", "test_results", "coverage") + " -- -R json-cov >> " +path.join("frontend", "test_results", "results.json")
+              ],
+              options: {
               stdout: true,
               callback : consolidateCoverageResults
           }
