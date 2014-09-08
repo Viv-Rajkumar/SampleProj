@@ -1,5 +1,5 @@
 var assert =  require('assert');
-var app = require('../app/calculator');
+var app = require('../frontend/app/calculator');
 
 describe("Calculator Tests", function(){
 
