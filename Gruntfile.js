@@ -1,58 +1,7 @@
 module.exports = function(grunt){
 
   var path = require('path');
-  var fs = require('fs');
-  var htmlParser = require('htmlparser2');
-
-  var getParser = function(){
-     return new htmlParser.Parser({
-        onopentag: function(name, attribs){
-            if(name === "h2"){
-                watch = true;
-            }
-        },
-        ontext: function(text){
-            if(watch && text.indexOf('%') > -1){
-              text = text.trim()
-              coverageResult[keys[counter]] = parseInt(text.substring(0, text.length-1))
-              counter++;
-            }                
-        },
-        onclosetag: function(tagname){
-            if(tagname === "h2")
-              watch = false;
-        }
-    });
-  }
-
-  function consolidateCoverageResults(err, stdout, stderr, callback){
-   
-    var watch = false;
-    var keys = ["statement","branches", "functions", "lines"];      
-    var coverageResult = {};
-    var counter = 0;
-    var parser = getParser();
-
-    var getTestResults = function(){
-      fs.readFile('frontend/test_results/results.json', {encoding : 'utf-8'}, function (err, data) {
-        if (err) throw err;        
-        console.log(JSON.parse(data.split('=')[0]).stats);        
-        callback()      
-      });
-    };
-
-    fs.readFile('frontend/test_results/coverage/lcov-report/index.html', {encoding : 'utf-8'}, function (err, data) {
-      if (!err){
-        parser.write(data);
-        parser.end()
-        console.log(coverageResult)
-        getTestResults()      
-      }else{
-        callback()
-      }       
-    });
-    
-  }
+  var builder = require('./build/badge_generator')
 
   grunt.initConfig({
       shell :{
@@ -65,8 +14,8 @@ module.exports = function(grunt){
         "test-cov" :{
           command: path.join("node_modules",".bin","istanbul") +" cover " + path.join("node_modules", "mocha", "bin", "_mocha") + " --dir " + path.join("frontend", "test_results", "coverage") + " -- -R json-cov > " +path.join("frontend", "test_results", "results.json"),
               options: {
-              stdout: true
-              //callback : consolidateCoverageResults
+              stdout: true,
+              callback : builder.consolidateCoverageResults
           }
         },
         ctest :{
