@@ -2,6 +2,7 @@ module.exports = function(grunt){
 
   var path = require('path');
   var builder = require('./build/badge_generator')
+   
 
   grunt.initConfig({
       shell :{
@@ -34,17 +35,21 @@ module.exports = function(grunt){
             create: ['frontend/test_results']
           }
          }
+      },
+      env : {
+          mochaPlain : {
+            'mocha-unfunk-style' : "plain"
+          }
       }
   });
 
-
-//
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-mkdir');
+  grunt.loadNpmTasks('grunt-env');
 
   grunt.registerTask('test', ['shell:test']);//Test
   grunt.registerTask('istanbul', ["clean:test", "mkdir:test", 'shell:test-cov']);//Test Coverage results
-  grunt.registerTask('ctest', ['shell:ctest']);//Pushes Test results to CDASH  
+  grunt.registerTask('ctest', ['env:mochaPlain', 'shell:ctest']);//Pushes Test results to CDASH  
 
 };
